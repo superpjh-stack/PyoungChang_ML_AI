@@ -13,3 +13,4 @@ uvicorn api.main:app --reload --port 8011
 
 별도 터미널에서 `cd web && npm run dev`를 실행합니다. 테스트는 `.venv/bin/pytest`, 프런트엔드 빌드는 `cd web && npm run build`입니다.
 
+# PyoungChang_ML_AI
