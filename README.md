@@ -13,4 +13,12 @@ uvicorn api.main:app --reload --port 8011
 
 별도 터미널에서 `cd web && npm run dev`를 실행합니다. 테스트는 `.venv/bin/pytest`, 프런트엔드 빌드는 `cd web && npm run build`입니다.
 
+## Docker 배포
+
+```bash
+docker compose up -d --build
+```
+
+웹 컨테이너가 `/api`를 내부 API 컨테이너로 프록시합니다. 실제 서버에서는 HTTPS, 방화벽, 인증과 운영 데이터 저장소를 별도로 설정해야 합니다.
+
 # PyoungChang_ML_AI
