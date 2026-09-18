@@ -1,19 +1,26 @@
 services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile.api
+    image: python:3.11-slim
+    working_dir: /srv
+    command: >-
+      sh -c "apt-get update && apt-get install -y --no-install-recommends git
+      && git clone --depth 1 https://github.com/superpjh-stack/PyoungChang_ML_AI.git app
+      && pip install --no-cache-dir -r app/requirements.txt
+      && uvicorn api.main:app --app-dir app --host 0.0.0.0 --port 8000"
     restart: unless-stopped
     expose:
       - "8000"
 
   web:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
+    image: node:22-alpine
+    working_dir: /srv
+    command: >-
+      sh -c "apk add --no-cache git
+      && git clone --depth 1 https://github.com/superpjh-stack/PyoungChang_ML_AI.git app
+      && sed -i 's#127.0.0.1:8011#api:8000#' app/web/vite.config.ts
+      && cd app/web && npm ci && npm run dev -- --host 0.0.0.0"
     restart: unless-stopped
     depends_on:
       - api
     ports:
-      - "80:80"
-
+      - "80:5173"
